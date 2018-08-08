@@ -1,0 +1,143 @@
+@import '~antd/lib/style/themes/default.less';
+
+.inverter_wrap{
+  //background: #fff;
+  height: 100%;
+  .path_nav{
+    padding:0 20px;
+    background: #fff;
+    line-height: 36px;
+    //border-bottom: 1px solid #ccc;
+    span{
+      &:hover{
+        color: @primary-color;
+        cursor: pointer;
+      }
+    }
+  }
+}
+.inverter_head{
+  padding: 10px 20px;
+  background: @primary-1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+  >div{
+    display: flex;
+    >div{
+      display: flex;
+      flex-direction: column;
+      div{
+        &.title{
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          p{
+            margin-bottom: 0;
+            margin-right: 10px;
+            &:nth-child(1){
+              font-size: 20px;
+              color: @primary-color;
+
+            }
+            span{
+              &.green{
+                color: #52c41a;
+                margin-right: 5px;
+              }
+            }
+          }
+        }
+        span{
+          margin-right: 10px;
+          display: inline-block;
+        }
+        margin-bottom: 5px;
+      }
+
+    }
+    >p{
+      margin:0 20px;
+      span{
+        color: @primary-color;
+        margin-right: 5px;
+      }
+    }
+  }
+}
+.inverter_cont{
+  height: calc(~"100% - 136px");
+  .inverter_row2{
+    padding-top: 24px;
+    height: 100%
+  }
+  .inverter_col{
+    height: 100%;
+    >div{
+      height: 100%;
+      background: #fff;
+    }
+  }
+}
+.head_title{
+   display: flex;
+   width: 100%;
+   justify-content: space-between;
+   line-height: 36px;
+   background: @primary-1 !important;
+   span{
+     display: inline-block;
+     padding:0 20px;
+     transition: all 0.5s;
+     line-height: 36px;
+     cursor: pointer;
+     &.active{
+       color: @primary-color;
+     }
+   }
+   img{
+     width: 24px;
+   }
+   .select{
+     >div{
+       >div{
+         background-color: rgba(0,0,0,0) !important;
+         border: none !important;
+       }
+     }
+   }
+ }
+.ratio_cont{
+  height: calc(~"100% - 36px");
+  padding-top: 10px;
+  position: relative;
+  min-height: 250px;
+  overflow: hidden;
+  >div{
+    position: absolute;
+    left: 100%;
+    transition: all 0.5s;
+    height: 100%;
+    width: 100%;
+    &.active{
+      left: 0;
+    }
+  }
+}
+.tb_line{
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid #ccc;
+  padding:8px 0;
+  >div{
+    padding:0 20px;
+    flex: 1;
+    span{
+      display: inline-block;
+      width: 50%;
+      cursor: pointer;
+    }
+  }
+}
+
