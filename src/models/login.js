@@ -22,7 +22,7 @@ export default {
       const response = yield call(Login, params);
       if (response.errno === 0) {
         Cookie.set("user_info",response.data);
-        window.location.href='/center/dashboard/analysis'; // 注：这里用routerRedux.push()会有问题
+        window.location.href='/center/dashboard'; // 注：这里用routerRedux.push()会有问题
       }else {
         message.error(response.errmsg)
       }

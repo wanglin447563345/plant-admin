@@ -3,7 +3,7 @@ const is_detail = Number.parseInt(location.href.indexOf("detail"))
 
 const menuData = is_detail < 0?[
   {
-    name: '首页',
+    name: '集控视图',
     icon: 'dashboard',
     path: 'dashboard',
     // children: [
@@ -14,7 +14,7 @@ const menuData = is_detail < 0?[
     // ],
   },
   {
-    name: '场站',
+    name: '场站列表',
     icon: 'table',
     path: 'list',
     // children: [
