@@ -264,37 +264,40 @@ export default class Analysis extends Component {
               {/*<div className={styles.img}><img src={more} alt="" /></div>*/}
               {/*<div className={styles.title}>更多</div>*/}
             {/*</div>*/}
-            <div className={styles.item_map} onClick={()=>this.props.dispatch(routerRedux.push("/leeland/list/table-list"))}>
+            <div className={styles.item_map} onClick={()=>this.props.dispatch(routerRedux.push("/center/list/plant-list"))}>
               <div className={styles.img}>
                 <img src={total} alt="" />
               </div>
               <div className={styles.num}>总场站数</div>
               <div className={styles.num}>12</div>
             </div>
+            <div className={styles.item_map}>
+              <Gauge f_color="#fff" title="累计RP" height={128} percent={creatData()} />
+            </div>
           </div>
           <div className={styles.line2}>
-            <div className={styles.item_map}>
-              <div className={styles.img}>
-                <img src={co} alt="" />
-              </div>
-              <div className={styles.num}>
-                节能减排CO₂
-              </div>
-              <div className={styles.num}>
-                21212吨
-              </div>
-            </div>
-            <div className={styles.item_map}>
-              <div className={styles.img}>
-                <img src={elec} alt="" />
-              </div>
-              <div className={styles.num}>
-                累计发电量
-              </div>
-              <div className={styles.num}>
-                21212MWh
-              </div>
-            </div>
+            {/*<div className={styles.item_map}>*/}
+              {/*<div className={styles.img}>*/}
+                {/*<img src={co} alt="" />*/}
+              {/*</div>*/}
+              {/*<div className={styles.num}>*/}
+                {/*节能减排CO₂*/}
+              {/*</div>*/}
+              {/*<div className={styles.num}>*/}
+                {/*21212吨*/}
+              {/*</div>*/}
+            {/*</div>*/}
+            {/*<div className={styles.item_map}>*/}
+              {/*<div className={styles.img}>*/}
+                {/*<img src={elec} alt="" />*/}
+              {/*</div>*/}
+              {/*<div className={styles.num}>*/}
+                {/*累计发电量*/}
+              {/*</div>*/}
+              {/*<div className={styles.num}>*/}
+                {/*21212MWh*/}
+              {/*</div>*/}
+            {/*</div>*/}
           </div>
           <div className={styles.line3}>
             <div className={styles.item_map}>
@@ -319,9 +322,7 @@ export default class Analysis extends Component {
                 21MWp
               </div>
             </div>
-            <div className={styles.item_map}>
-              <Gauge f_color="#fff" title="累计RP" height={128} percent={creatData()} />
-            </div>
+
           </div>
         </div>
         <div className={styles.db_map} id="home_map" />

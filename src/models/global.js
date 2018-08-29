@@ -1,4 +1,5 @@
 import { queryNotices } from '../services/api';
+import {verifyUser} from "../utils/utils"
 
 export default {
   namespace: 'global',
@@ -55,7 +56,12 @@ export default {
   },
 
   subscriptions: {
-    setup({ history }) {
+    setup({ dispatch, history }) {
+      if(history.location.pathname==='/center/user/login') {
+
+      }else {
+        verifyUser(dispatch)
+      }
       // Subscribe history(url) change, trigger `load` action if pathname is `/`
       return history.listen(({ pathname, search }) => {
         if (typeof window.ga !== 'undefined') {

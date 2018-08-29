@@ -126,9 +126,11 @@ export default class SiderMenu extends PureComponent {
    * get SubMenu or Item
    */
   getSubMenuOrItem = item => {
+    console.log(item)
     if (item.children && item.children.some(child => child.name)) {
       const childrenItems = this.getNavMenuItems(item.children);
       // 当无子菜单时就不展示菜单
+      console.log(childrenItems)
       if (childrenItems && childrenItems.length > 0) {
         return (
           <SubMenu
@@ -206,6 +208,7 @@ export default class SiderMenu extends PureComponent {
   };
 
   handleOpenChange = openKeys => {
+    console.log(openKeys)
     const lastOpenKey = openKeys[openKeys.length - 1];
     const moreThanOne = openKeys.filter(openKey => this.isMainMenu(openKey)).length > 1;
     this.setState({

@@ -1,9 +1,10 @@
 import { routerRedux } from 'dva/router';
-import { stringify } from 'qs';
-import { fakeAccountLogin } from '../services/api';
+import { Login } from '../services/api';
 import { setAuthority } from '../utils/authority';
 import { reloadAuthorized } from '../utils/Authorized';
-import { getPageQuery } from '../utils/utils';
+import MD5 from 'md5'
+import Cookie from 'js-cookie'
+import { message } from "antd"
 
 export default {
   namespace: 'login',
@@ -14,8 +15,17 @@ export default {
 
   effects: {
     *login({ payload }, { call, put }) {
-
-      // const response = yield call(fakeAccountLogin, payload);
+      const params={
+        user_name:payload.user_name,
+        password:MD5(payload.password),
+      };
+      const response = yield call(Login, params);
+      if (response.errno === 0) {
+        Cookie.set("user_info",response.data);
+        window.location.href='/center/dashboard/analysis'; // 注：这里用routerRedux.push()会有问题
+      }else {
+        message.error(response.errmsg)
+      }
       yield put({
         type: 'changeLoginStatus',
         payload: {
@@ -23,43 +33,28 @@ export default {
           currentAuthority: 'admin',
         },
       });
-      reloadAuthorized();
-      const urlParams = new URL(window.location.href);
-      const params = getPageQuery();
-      let { redirect } = params;
-      if (redirect) {
-        const redirectUrlParams = new URL(redirect);
-        if (redirectUrlParams.origin === urlParams.origin) {
-          redirect = redirect.substr(urlParams.origin.length);
-          if (redirect.startsWith('/#')) {
-            redirect = redirect.substr(2);
-          }
-        } else {
-          window.location.href = redirect;
-          return;
-        }
-      }
-      yield put(routerRedux.replace('/leeland/dashboard/analysis'));
-      // Login successfully
-      // if (response.status === 'ok') {
-      //   reloadAuthorized();
-      //   const urlParams = new URL(window.location.href);
-      //   const params = getPageQuery();
-      //   let { redirect } = params;
-      //   if (redirect) {
-      //     const redirectUrlParams = new URL(redirect);
-      //     if (redirectUrlParams.origin === urlParams.origin) {
-      //       redirect = redirect.substr(urlParams.origin.length);
-      //       if (redirect.startsWith('/#')) {
-      //         redirect = redirect.substr(2);
-      //       }
-      //     } else {
-      //       window.location.href = redirect;
-      //       return;
+
+      // reloadAuthorized();
+      // const urlParams = new URL(window.location.href);
+      // console.log('urlParams:' + urlParams)
+      // const params = getPageQuery();
+      // let { redirect } = params;
+      // if (redirect) {
+      //   const redirectUrlParams = new URL(redirect);
+      //   console.log('redirectUrlParams:' + redirectUrlParams)
+      //   if (redirectUrlParams.origin === urlParams.origin) {
+      //     redirect = redirect.substr(urlParams.origin.length);
+      //     if (redirect.startsWith('/#')) {
+      //       redirect = redirect.substr(2);
       //     }
+      //   } else {
+      //     window.location.href = redirect;
+      //     return;
       //   }
-      //   yield put(routerRedux.replace(redirect || '/leeland/dashboard/analysis'));
       // }
+
+      // Login successfully
+
     },
     *logout(_, { put }) {
       yield put({
@@ -72,10 +67,7 @@ export default {
       reloadAuthorized();
       yield put(
         routerRedux.push({
-          pathname: '/leeland/user/login',
-          search: stringify({
-            redirect: window.location.href,
-          }),
+          pathname: '/center/user/login',
         })
       );
     },
@@ -87,7 +79,6 @@ export default {
       return {
         ...state,
         status: payload.status,
-        type: payload.type,
       };
     },
   },

@@ -1,6 +1,78 @@
 import { stringify } from 'qs';
 import request from '../utils/request';
 
+// 登录
+export async function Login(params) {
+  return request(`${window.DATA_URL}/guest/login`, {
+    method: 'POST',
+    body: params,
+  });
+}
+
+// 场站列表
+export async function plant_list(params) {
+  return request(`${window.DATA_URL}/plant/list`, {
+    method: 'POST',
+    body: params,
+  });
+}
+
+// 逆变器列表
+export async function inverter_list(params) {
+  return request(`${window.DATA_URL}/inverter/list`, {
+    method: 'POST',
+    body: params,
+  });
+}
+
+// 电表列表
+export async function meter_list(params) {
+  return request(`${window.DATA_URL}/meter/list`, {
+    method: 'POST',
+    body: params,
+  });
+}
+
+// 天气列表
+export async function weather_list(params) {
+  return request(`${window.DATA_URL}/weather_station/list`, {
+    method: 'POST',
+    body: params,
+  });
+}
+
+// 逆变器原始数据
+export async function inverter_raw(params) {
+  return request(`${window.DATA_URL}/inverter/raw`, {
+    method: 'POST',
+    body: params,
+  });
+}
+
+// 电表原始数据
+export async function meter_raw(params) {
+  return request(`${window.DATA_URL}/meter/raw`, {
+    method: 'POST',
+    body: params,
+  });
+}
+
+// 天气原始数据
+export async function weather_raw(params) {
+  return request(`${window.DATA_URL}/weather_station/raw`, {
+    method: 'POST',
+    body: params,
+  });
+}
+
+
+
+
+
+
+
+
+
 export async function queryProjectNotice() {
   return request('/api/project/notice');
 }
@@ -60,12 +132,7 @@ export async function queryFakeList(params) {
   return request(`/api/fake_list?${stringify(params)}`);
 }
 
-export async function fakeAccountLogin(params) {
-  return request('/api/login/account', {
-    method: 'POST',
-    body: params,
-  });
-}
+
 
 export async function fakeRegister(params) {
   return request('/api/register', {

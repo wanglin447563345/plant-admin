@@ -6,35 +6,35 @@ const menuData = is_detail < 0?[
     name: '首页',
     icon: 'dashboard',
     path: 'dashboard',
-    children: [
-      {
-        name: '视图',
-        path: 'analysis',
-      },
-    ],
+    // children: [
+    //   {
+    //     name: '视图',
+    //     path: 'analysis',
+    //   },
+    // ],
   },
   {
     name: '场站',
     icon: 'table',
     path: 'list',
-    children: [
-      {
-        name: '场站列表',
-        path: 'table-list',
-      },
-    ],
+    // children: [
+    //   {
+    //     name: '场站列表',
+    //     path: 'plant-list',
+    //   },
+    // ],
   },
   {
     name: '告警服务',
     icon: 'exclamation-circle-o',
     path: 'warning',
-    children: [
-      {
-        name: '全部告警',
-        path: 'all',
-        authority: 'admin',
-      },
-    ],
+    // children: [
+    //   {
+    //     name: '全部告警',
+    //     path: 'all',
+    //     authority: 'admin',
+    //   },
+    // ],
   },
 ]:[
   {
@@ -88,7 +88,7 @@ const menuData = is_detail < 0?[
   },
 
 ];
-const Path=is_detail<0?"/leeland/":"/leeland/detail/";
+const Path=is_detail<0?"/center/":"/center/detail/";
 function formatter(data, parentPath= Path, parentAuthority) {
   return data.map(item => {
     let { path } = item;

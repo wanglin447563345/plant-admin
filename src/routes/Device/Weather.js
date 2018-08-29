@@ -1,14 +1,16 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
 import {
   Table,
   Tooltip,
+  Button,
 } from 'antd';
 
-import styles from '../List/TableList.less';
+import styles from '../List/PlantList.less';
 
-@connect(({  }) => ({
-
+@connect(({ weather_list }) => ({
+  weather_list,
 }))
 
 export default class TableList extends PureComponent {
@@ -16,43 +18,63 @@ export default class TableList extends PureComponent {
     tabKey:"1"
   };
 
+  // 天气列表
+  get_weather_list=(params)=>{
+    const { dispatch } = this.props;
+    dispatch({
+      type:"weather_list/weather_list",
+      payload:{
+        plant_id:sessionStorage.getItem("plant_id"),
+        ...params,
+      },
+    })
+  }
+
+  // 分页
+  change_page = (pagination) => {
+    this.get_weather_list({ page:pagination.current})
+  };
+
+  componentDidMount() {
+    this.get_weather_list()
+  }
+
   render() {
 
     const columns = [
-      { title: 'Full Name', width: 120, dataIndex: 'name', key: 'name', fixed: 'left' },
-      { title: 'Age', width: 100, dataIndex: 'age', key: 'age', fixed: 'left' },
-      { title: 'Column 1', dataIndex: 'address', key: '1' },
-      { title: 'Column 2', dataIndex: 'address', key: '2' },
-      { title: 'Column 3', dataIndex: 'address', key: '3' },
-      { title: 'Column 4', dataIndex: 'address', key: '4' },
-      { title: 'Column 5', dataIndex: 'address', key: '5' },
-      { title: 'Column 6', dataIndex: 'address', key: '6' },
-      { title: 'Column 7', dataIndex: 'address', key: '7' },
-      { title: 'Column 8', dataIndex: 'address', key: '8' },
+      { title: '名称', dataIndex: 'weather_station_name', key: 'weather_station_name' },
+      { title: '辐照强度 w/m2', dataIndex: 'irradiation', key: 'irradiation' },
+      { title: '今日累计辐照 kwh/m2', dataIndex: 'todays_irradiation', key: 'todays_irradiation' },
+      { title: '总累计辐照 kwh/m2', dataIndex: 'total_irradiation', key: 'total_irradiation' },
       {
-        title: 'Action',
-        key: 'operation',
-        render: () => <a href="javascript:;">action</a>,
+        title: '操作',
+        key: 'action',
+        render: (text, record) => (
+          <Button
+            ghost={true}
+            icon="eye"
+            type="primary"
+            size='small'
+            shape="circle"
+            title="原始数据"
+            onClick={(e) =>{
+              e.stopPropagation(); //这里需要阻止事件冒泡
+              sessionStorage.setItem("weather_station_id",record.weather_station_id);
+              this.props.dispatch(routerRedux.push(`/center/detail/device/weather-raw`))
+            }
+            }
+          />
+        ),
       },
     ];
 
-    const data = [{
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York Park',
-    }, {
-      key: '2',
-      name: 'Jim Green',
-      age: 40,
-      address: 'London Park',
-    }];
     const selectTab = (i)=> {
       this.setState({
         tabKey:i
       })
     }
 
+    const {weather_list}=this.props;
     return (
       <div className={styles.my_table}>
         <div className={styles.select_tab}>
@@ -89,8 +111,10 @@ export default class TableList extends PureComponent {
         </div>
         <Table
           columns={columns}
-          dataSource={data}
-          scroll={{ x: 1300 }}
+          dataSource={weather_list.data.list}
+          pagination={weather_list.data.pagination}
+          rowKey='weather_station_id'
+          onChange={this.change_page}
         />
       </div>
     );

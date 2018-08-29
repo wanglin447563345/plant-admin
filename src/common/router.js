@@ -71,60 +71,69 @@ function getFlatMenuData(menus) {
 
 export const getRouterData = app => {
   const routerConfig = {
-    '/leeland/': {
+    '/center/': {
       component: dynamicWrapper(app, ['user', 'login'], () => import('../layouts/BasicLayout')),
     },
-    '/leeland/dashboard/analysis': {
+    '/center/dashboard': {
       component: dynamicWrapper(app, ['chart'], () => import('../routes/Dashboard/Analysis')),
     },
-    '/leeland/user': {
+    '/center/user': {
       component: dynamicWrapper(app, [], () => import('../layouts/UserLayout')),
     },
-    '/leeland/user/login': {
+    '/center/user/login': {
       component: dynamicWrapper(app, ['login'], () => import('../routes/User/Login')),
     },
-    '/leeland/list/table-list': {
-      component: dynamicWrapper(app, ['rule'], () => import('../routes/List/TableList')),
+    '/center/list': {
+      component: dynamicWrapper(app, ['plant_list'], () => import('../routes/List/PlantList')),
     },
-    '/leeland/warning/all': {
+    '/center/warning': {
       component: dynamicWrapper(app, ['profile'], () => import('../routes/Warning/WarningList')),
     },
-    '/leeland/detail/': {
+    '/center/detail/': {
       component: dynamicWrapper(app, ['user', 'login'], () =>  () => import('../layouts/BasicLayout')),
     },
-    '/leeland/detail/info/analysis': {
+    '/center/detail/info/analysis': {
       component: dynamicWrapper(app, ['profile'], () => import('../routes/Info/Analysis')),
     },
-    '/leeland/detail/device/inverter-list': {
-      component: dynamicWrapper(app, ['profile'], () => import('../routes/Device/Inverter')),
+    '/center/detail/device/inverter-list': {
+      component: dynamicWrapper(app, ['inverter_list'], () => import('../routes/Device/Inverter')),
     },
-    '/leeland/detail/device/mix-list': {
+    '/center/detail/device/mix-list': {
       component: dynamicWrapper(app, ['profile'], () => import('../routes/Device/Mix')),
     },
-    '/leeland/detail/device/box-list': {
+    '/center/detail/device/box-list': {
       component: dynamicWrapper(app, ['profile'], () => import('../routes/Device/Box')),
     },
-    '/leeland/detail/device/weather-list': {
-      component: dynamicWrapper(app, ['profile'], () => import('../routes/Device/Weather')),
+    '/center/detail/device/weather-list': {
+      component: dynamicWrapper(app, ['weather_list'], () => import('../routes/Device/Weather')),
     },
-    '/leeland/detail/device/meter-list': {
-      component: dynamicWrapper(app, ['profile'], () => import('../routes/Device/Meter')),
+    '/center/detail/device/meter-list': {
+      component: dynamicWrapper(app, ['meter_list'], () => import('../routes/Device/Meter')),
     },
-    '/leeland/detail/warning/all': {
+    '/center/detail/warning/all': {
       component: dynamicWrapper(app, ['profile'], () => import('../routes/DetailWarning/DetailWarning')),
     },
-    '/leeland/detail/device/inverter-detail': {
+    '/center/detail/device/inverter-detail': {
       component: dynamicWrapper(app, ['profile'], () => import('../routes/InsidePages/InverterDetail')),
     },
-    '/leeland/detail/device/mix-detail': {
+    '/center/detail/device/mix-detail': {
       component: dynamicWrapper(app, ['profile'], () => import('../routes/InsidePages/MixDetail')),
     },
-    '/leeland/detail/device/box-detail': {
-      component: dynamicWrapper(app, ['profile'], () => import('../routes/InsidePages/BoxDetail')),
+    '/center/detail/device/inverter-raw': {
+      component: dynamicWrapper(app, ['inverter_raw'], () => import('../routes/RawPages/InverterRaw')),
     },
-    '/leeland/detail/device/meter-detail': {
-      component: dynamicWrapper(app, ['profile'], () => import('../routes/InsidePages/MeterDetail')),
+    '/center/detail/device/meter-raw': {
+      component: dynamicWrapper(app, ['meter_raw'], () => import('../routes/RawPages/MeterRaw')),
     },
+    '/center/detail/device/weather-raw': {
+      component: dynamicWrapper(app, ['weather_raw'], () => import('../routes/RawPages/WeatherRaw')),
+    },
+    // '/center/detail/device/box-detail': {
+    //   component: dynamicWrapper(app, ['profile'], () => import('../routes/InsidePages/BoxDetail')),
+    // },
+    // '/center/detail/device/meter-detail': {
+    //   component: dynamicWrapper(app, ['profile'], () => import('../routes/InsidePages/MeterDetail')),
+    // },
   };
   // Get name from ./menu.js or just set it in the router data.
   const menuData = getFlatMenuData(getMenuData());

@@ -2,6 +2,7 @@ import fetch from 'dva/fetch';
 import { notification } from 'antd';
 import { routerRedux } from 'dva/router';
 import store from '../index';
+import Cookie from 'js-cookie'
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -52,10 +53,14 @@ export default function request(url, options) {
     newOptions.method === 'PUT' ||
     newOptions.method === 'DELETE'
   ) {
+    const user_info = Cookie.get("user_info")?JSON.parse(Cookie.get("user_info")):{};
     if (!(newOptions.body instanceof FormData)) {
       newOptions.headers = {
         Accept: 'application/json',
         'Content-Type': 'application/json; charset=utf-8',
+        "X-Beancomm-CompanyCode":"beancomm",
+        "X-Beancomm-UserId":user_info?user_info.user_id:'',
+        "X-Beancomm-Token":user_info?user_info.token:'',
         ...newOptions.headers,
       };
       newOptions.body = JSON.stringify(newOptions.body);
@@ -63,6 +68,9 @@ export default function request(url, options) {
       // newOptions.body is FormData
       newOptions.headers = {
         Accept: 'application/json',
+        "X-Beancomm-CompanyCode":"beancomm",
+        "X-Beancomm-UserId":user_info.user_id||'',
+        "X-Beancomm-Token":user_info.token||'',
         ...newOptions.headers,
       };
     }

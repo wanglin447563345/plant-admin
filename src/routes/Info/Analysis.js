@@ -350,35 +350,16 @@ export default class Analysis extends Component {
           <Row gutter={24} className={styles.my_row2}>
             <Col {...topColResponsiveProps3} className={styles.in_col}>
               <div className={styles.row}>
-                <div className={styles.col1}>
-                  <div className={styles.head_title}>
-                    <div>
-                      累计RP
-                    </div>
-                  </div>
-                  <div style={{width:"100%",height:160,margin:"0 auto"}}>
-                    <Gauge f_color="#000" height={160} percent={creatData()} />
-                  </div>
-                </div>
-                <div className={styles.col2}>
-                  <div className={styles.head_title}>
-                    <div>
-                      发电量 <span>&</span> 收益 <span>&</span> 满发小时
-                    </div>
-                    <div className={styles.select}>
-                      <Select defaultValue="year" style={{ width: 70 }} onChange={this.handleChange}>
-                        <Option value="year">当年</Option>
-                        <Option value="month">当月</Option>
-                        <Option value="day">当日</Option>
-                      </Select>
-                    </div>
-                  </div>
-                  <div style={{padding:"0 20px"}}>
-                    <Bar height={148} data={salesData} type="line" />
-                  </div>
-                </div>
-              </div>
-              <div className={styles.row}>
+                {/*<div className={styles.col1}>*/}
+                  {/*<div className={styles.head_title}>*/}
+                    {/*<div>*/}
+                      {/*累计RP*/}
+                    {/*</div>*/}
+                  {/*</div>*/}
+                  {/*<div style={{width:"100%",height:160,margin:"0 auto"}}>*/}
+                    {/*<Gauge f_color="#000" height={160} percent={creatData()} />*/}
+                  {/*</div>*/}
+                {/*</div>*/}
                 <div className={styles.col1}>
                   <div className={styles.head_title}>
                     <div>
@@ -401,6 +382,26 @@ export default class Analysis extends Component {
                   </div>
                 </div>
                 <div className={styles.col2}>
+                  <div className={styles.head_title}>
+                    <div>
+                      发电量 <span>&</span> 收益 <span>&</span> 满发小时
+                    </div>
+                    <div className={styles.select}>
+                      <Select defaultValue="year" style={{ width: 70 }} onChange={this.handleChange}>
+                        <Option value="year">当年</Option>
+                        <Option value="month">当月</Option>
+                        <Option value="day">当日</Option>
+                      </Select>
+                    </div>
+                  </div>
+                  <div style={{padding:"0 20px"}}>
+                    <Bar height={148} data={salesData} type="line" />
+                  </div>
+                </div>
+              </div>
+              <div className={styles.row}>
+
+                <div className={styles.col2} style={{width:"100%", marginLeft:0}}>
                   <div className={styles.head_title}>
                     <div>
                       发电量 <span>&</span> 辐照 <span>&</span> RP

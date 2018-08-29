@@ -139,7 +139,7 @@ export default class InverterDetail extends PureComponent {
     return (
       <div className={styles.inverter_wrap}>
         <div className={styles.path_nav}>
-          <span onClick={()=>this.props.dispatch(routerRedux.push("/leeland/detail/device/inverter-list"))}>逆变器列表</span> > 逆变器详情
+          <span onClick={()=>this.props.dispatch(routerRedux.push("/center/detail/device/inverter-list"))}>逆变器列表</span> > 逆变器详情
         </div>
         <div className={styles.inverter_head}>
           <div>

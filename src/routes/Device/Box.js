@@ -6,7 +6,7 @@ import {
   Tooltip,
 } from 'antd';
 
-import styles from '../List/TableList.less';
+import styles from '../List/PlantList.less';
 
 @connect(({  }) => ({
 
@@ -100,13 +100,13 @@ export default class TableList extends PureComponent {
           columns={columns}
           dataSource={data}
           scroll={{ x: 1300 }}
-          onRow={(record) => {
-            return {
-              onClick: () => {
-                this.props.dispatch(routerRedux.push('/leeland/detail/device/box-detail'))
-              },       // 点击行
-            };
-          }}
+          // onRow={(record) => {
+          //   return {
+          //     onClick: () => {
+          //       this.props.dispatch(routerRedux.push('/leeland/detail/device/box-detail'))
+          //     },       // 点击行
+          //   };
+          // }}
         />
       </div>
     );

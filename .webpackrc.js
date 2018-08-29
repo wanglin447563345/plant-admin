@@ -9,9 +9,16 @@ export default {
       publicPath: '/',
     },
     production:{
-      publicPath: '/leeland/',
+      publicPath: '/center/',
     },
   },
+  // proxy: {
+  //   "/api": {
+  //     "target": "//leeland.beancomm.net/",
+  //     "changeOrigin": true,
+  //     "pathRewrite": { "^/api" : "" }
+  //   },
+  // },
   externals: {
     '@antv/data-set': 'DataSet',
     rollbar: 'rollbar',

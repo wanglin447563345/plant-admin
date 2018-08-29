@@ -1,7 +1,7 @@
-import { queryRule, removeRule, addRule } from '../services/api';
+import { plant_list, removeRule, addRule } from '../services/api';
 
 export default {
-  namespace: 'rule',
+  namespace: 'plant_list',
 
   state: {
     data: {
@@ -11,11 +11,19 @@ export default {
   },
 
   effects: {
-    *fetch({ payload }, { call, put }) {
-      const response = yield call(queryRule, payload);
+    *plant_list({ payload }, { call, put }) {
+      // const params={}
+      const response = yield call(plant_list, payload);
+      const data={
+        list:response.data.data,
+        pagination:{
+          total: response.data.count,
+          current: response.data.currentPage,
+        },
+      }
       yield put({
         type: 'save',
-        payload: response,
+        payload: data,
       });
     },
     *add({ payload, callback }, { call, put }) {

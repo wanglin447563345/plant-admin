@@ -16,6 +16,7 @@ import { getRoutes } from '../utils/utils';
 import Authorized from '../utils/Authorized';
 import { getMenuData } from '../common/menu';
 import logo from '../assets/logo.png';
+import Cookie from 'js-cookie'
 
 
 const { Content, Header } = Layout;
@@ -246,9 +247,9 @@ class BasicLayout extends React.PureComponent {
 
           <Content className={styles.cont_cont_layout}>
             <Switch>
-              {redirectData.map(item => (
-                <Redirect key={item.from} exact from={item.from} to={item.to} />
-              ))}
+              {/*{redirectData.map(item => (*/}
+                {/*<Redirect key={item.from} exact from={item.from} to={item.to} />*/}
+              {/*))}*/}
               {getRoutes(match.path, routerData).map(item => (
                 <AuthorizedRoute
                   key={item.key}
@@ -259,7 +260,7 @@ class BasicLayout extends React.PureComponent {
                   redirectPath="/exception/403"
                 />
               ))}
-              <Redirect exact from="/" to={bashRedirect} />
+              <Redirect from="/center/" to={{pathname:"/center/dashboard/analysis"}} />
               <Route render={NotFound} />
             </Switch>
           </Content>

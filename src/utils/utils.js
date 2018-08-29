@@ -1,5 +1,7 @@
 import moment from 'moment';
 import { parse, stringify } from 'qs';
+import Cookie from 'js-cookie'
+import { routerRedux } from 'dva/router';
 
 export function fixedZero(val) {
   return val * 1 < 10 ? `0${val}` : val;
@@ -180,3 +182,13 @@ const reg = /(((^https?:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+(?::\d+)?|(
 export function isUrl(path) {
   return reg.test(path);
 }
+
+// 验证用户登录状态
+export function verifyUser(dispatch) {
+  let user_info =Cookie.get("user_info");
+  if (user_info&&user_info!=={}) {
+    Cookie.set("user_info", user_info)
+  }else{
+    dispatch(routerRedux.push('/center/user/login'))
+  }
+};

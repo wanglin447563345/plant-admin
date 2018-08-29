@@ -74,7 +74,9 @@ export default class GlobalHeader extends PureComponent {
     const noticeData = this.getNoticeData();
     return (
       <div className={styles.header}>
-        {isDetail<0?'': <a className={styles.nav_path} href="/leeland/dashboard/analysis">首页</a>}
+        {isDetail<0?'': <p className={styles.nav_path}>
+          <a href="/center/dashboard">首页</a>  > {sessionStorage.getItem('plant_name')}
+        </p>  }
         <div className={styles.logos}>
           <img src={logo} alt="" />
         </div>

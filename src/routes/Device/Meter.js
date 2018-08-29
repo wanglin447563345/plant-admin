@@ -4,12 +4,13 @@ import { routerRedux } from 'dva/router';
 import {
   Table,
   Tooltip,
+  Button,
 } from 'antd';
 
-import styles from '../List/TableList.less';
+import styles from '../List/PlantList.less';
 
-@connect(({  }) => ({
-
+@connect(({ meter_list }) => ({
+  meter_list
 }))
 
 export default class TableList extends PureComponent {
@@ -17,43 +18,68 @@ export default class TableList extends PureComponent {
     tabKey:"1"
   };
 
+  // 电表列表
+  get_meter_list=(params)=>{
+    const { dispatch } = this.props;
+    dispatch({
+      type:"meter_list/meter_list",
+      payload:{
+        plant_id:sessionStorage.getItem("plant_id"),
+        ...params,
+      },
+    })
+  }
+
+  // 分页
+  change_page = (pagination) => {
+    this.get_meter_list({ page:pagination.current})
+  };
+
+  componentDidMount() {
+    this.get_meter_list()
+  }
+
   render() {
 
     const columns = [
-      { title: 'Full Name', width: 120, dataIndex: 'name', key: 'name', fixed: 'left' },
-      { title: 'Age', width: 100, dataIndex: 'age', key: 'age', fixed: 'left' },
-      { title: 'Column 1', dataIndex: 'address', key: '1' },
-      { title: 'Column 2', dataIndex: 'address', key: '2' },
-      { title: 'Column 3', dataIndex: 'address', key: '3' },
-      { title: 'Column 4', dataIndex: 'address', key: '4' },
-      { title: 'Column 5', dataIndex: 'address', key: '5' },
-      { title: 'Column 6', dataIndex: 'address', key: '6' },
-      { title: 'Column 7', dataIndex: 'address', key: '7' },
-      { title: 'Column 8', dataIndex: 'address', key: '8' },
+      { title: '名称', width: 120, dataIndex: 'meter_name', key: 'meter_name', fixed: 'left' },
+      { title: '装机容量(kWh)', dataIndex: 'installed_capacity', key: 'installed_capacity' },
+      { title: '品牌', dataIndex: 'brand', key: 'brand' },
+      { title: '型号', dataIndex: 'model', key: 'model' },
+      { title: '有功功率(W)', dataIndex: 'active_power', key: 'active_power' },
+      { title: '无功功率(W)', dataIndex: 'reactive_power', key: 'reactive_power' },
+      { title: '视在功率(W)', dataIndex: 'apparent_power', key: 'apparent_power' },
+      { title: '今日发电量(kWh)', dataIndex: 'todays_energy', key: 'todays_energy' },
+      { title: '累计发电量(kWh)', dataIndex: 'total_energy', key: 'total_energy' },
       {
-        title: 'Action',
-        key: 'operation',
-        render: () => <a href="javascript:;">action</a>,
+        title: '操作',
+        key: 'action',
+        render: (text, record) => (
+          <Button
+            ghost={true}
+            icon="eye"
+            type="primary"
+            size='small'
+            shape="circle"
+            title="原始数据"
+            onClick={(e) =>{
+              e.stopPropagation(); //这里需要阻止事件冒泡
+              sessionStorage.setItem("meter_id",record.meter_id);
+              this.props.dispatch(routerRedux.push(`/center/detail/device/meter-raw`))
+            }
+            }
+          />
+        ),
       },
     ];
 
-    const data = [{
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York Park',
-    }, {
-      key: '2',
-      name: 'Jim Green',
-      age: 40,
-      address: 'London Park',
-    }];
     const selectTab = (i)=> {
       this.setState({
         tabKey:i
       })
-    }
+    };
 
+    const {meter_list}=this.props;
     return (
       <div className={styles.my_table}>
         <div className={styles.select_tab}>
@@ -90,15 +116,11 @@ export default class TableList extends PureComponent {
         </div>
         <Table
           columns={columns}
-          dataSource={data}
-          scroll={{ x: 1300 }}
-          onRow={(record) => {
-            return {
-              onClick: () => {
-                this.props.dispatch(routerRedux.push('/leeland/detail/device/meter-detail'))
-              },       // 点击行
-            };
-          }}
+          dataSource={meter_list.data.list}
+          pagination={meter_list.data.pagination}
+          rowKey='meter_id'
+          scroll={{ x: 1200 }}
+          onChange={this.change_page}
         />
       </div>
     );

@@ -4,56 +4,84 @@ import { routerRedux } from 'dva/router';
 import {
   Table,
   Tooltip,
+  Button,
 } from 'antd';
 
-import styles from '../List/TableList.less';
+import styles from '../List/PlantList.less';
 
-@connect(({  }) => ({
-
+@connect(({ inverter_list }) => ({
+  inverter_list,
 }))
 
 export default class TableList extends PureComponent {
   state = {
-    tabKey:"1"
+    tabKey:"1",
   };
+
+  // 逆变器列表
+  get_inverter_list=(params)=>{
+    const { dispatch } = this.props;
+    dispatch({
+      type:"inverter_list/inverter_list",
+      payload:{
+        plant_id:sessionStorage.getItem("plant_id"),
+        ...params,
+      },
+    })
+  }
+
+  // 分页
+  change_page = (pagination) => {
+    this.get_inverter_list({ page:pagination.current})
+  };
+
+  componentDidMount() {
+    this.get_inverter_list()
+  }
 
   render() {
 
     const columns = [
-      { title: 'Full Name', width: 120, dataIndex: 'name', key: 'name', fixed: 'left' },
-      { title: 'Age', width: 100, dataIndex: 'age', key: 'age', fixed: 'left' },
-      { title: 'Column 1', dataIndex: 'address', key: '1' },
-      { title: 'Column 2', dataIndex: 'address', key: '2' },
-      { title: 'Column 3', dataIndex: 'address', key: '3' },
-      { title: 'Column 4', dataIndex: 'address', key: '4' },
-      { title: 'Column 5', dataIndex: 'address', key: '5' },
-      { title: 'Column 6', dataIndex: 'address', key: '6' },
-      { title: 'Column 7', dataIndex: 'address', key: '7' },
-      { title: 'Column 8', dataIndex: 'address', key: '8' },
+      { title: '名称', width: 120, dataIndex: 'inverter_name', key: 'inverter_name', fixed: 'left' },
+      { title: '装机容量(kWh)', dataIndex: 'installed_capacity', key: 'installed_capacity' },
+      { title: '品牌', dataIndex: 'brand', key: 'brand' },
+      { title: '型号', dataIndex: 'model', key: 'model' },
+      { title: '输入功率(W)', dataIndex: 'power', key: 'power' },
+      { title: '输出功率(W)', dataIndex: 'dc_power', key: 'dc_power' },
+      { title: '效率', dataIndex: 'efficiency', key: 'efficiency' },
+      { title: '今日发电量(kWh)', dataIndex: 'todays_energy', key: 'todays_energy' },
+      { title: '累计发电量(kWh)', dataIndex: 'total_energy', key: 'total_energy' },
+      { title: '今日满发(h)', dataIndex: 'todays_full_power_hours', key: 'todays_full_power_hours' },
+      { title: '累计满发(h)', dataIndex: 'total_full_power_hours', key: 'total_full_power_hours' },
       {
-        title: 'Action',
-        key: 'operation',
-        render: () => <a href="javascript:;">action</a>,
+        title: '操作',
+        key: 'action',
+        render: (text, record) => (
+          <Button
+            ghost={true}
+            icon="eye"
+            type="primary"
+            size='small'
+            shape="circle"
+            title="原始数据"
+            onClick={(e) =>{
+              e.stopPropagation(); //这里需要阻止事件冒泡
+              sessionStorage.setItem("inverter_id",record.inverter_id);
+              this.props.dispatch(routerRedux.push(`/center/detail/device/inverter-raw`))
+            }
+            }
+          />
+        ),
       },
     ];
 
-    const data = [{
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York Park',
-    }, {
-      key: '2',
-      name: 'Jim Green',
-      age: 40,
-      address: 'London Park',
-    }];
     const selectTab = (i)=> {
       this.setState({
         tabKey:i
       })
-    }
+    };
 
+    const {inverter_list}=this.props;
     return (
       <div className={styles.my_table}>
         <div className={styles.select_tab}>
@@ -114,12 +142,16 @@ export default class TableList extends PureComponent {
         </div>
         <Table
           columns={columns}
-          dataSource={data}
-          scroll={{ x: 1300 }}
+          dataSource={inverter_list.data.list}
+          pagination={inverter_list.data.pagination}
+          rowKey='inverter_id'
+          scroll={{ x: 1200 }}
+          onChange={this.change_page}
           onRow={(record) => {
             return {
               onClick: () => {
-                this.props.dispatch(routerRedux.push('/leeland/detail/device/inverter-detail'))
+                sessionStorage.setItem("inverter_id",record.inverter_id);
+                this.props.dispatch(routerRedux.push(`/center/detail/device/inverter-detail`)) // 要使用这个重新加载整个页面，使左边导航的的数据变化
               },       // 点击行
             };
           }}
