@@ -28,7 +28,7 @@ export default class MeterRaw extends PureComponent {
 
   // 分页
   change_page = (current,pageSize) => {
-    Cookie.set('default_size',pageSize);
+    Cookie.set('default_size',pageSize,{ expires: 7 });
     this.get_meter_raw({ page:current,rows:pageSize})
   };
 

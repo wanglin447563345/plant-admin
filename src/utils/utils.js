@@ -187,7 +187,7 @@ export function isUrl(path) {
 export function verifyUser(dispatch) {
   let user_info =Cookie.get("user_info");
   if (user_info&&user_info!=={}) {
-    Cookie.set("user_info", user_info)
+    Cookie.set("user_info", user_info,{ expires: 7 })
   }else{
     dispatch(routerRedux.push('/center/user/login'))
   }

@@ -34,7 +34,7 @@ export default class TableList extends PureComponent {
 
   // 分页
   change_page = (current,pageSize) => {
-    Cookie.set('default_size',pageSize);
+    Cookie.set('default_size',pageSize,{ expires: 7 });
     this.get_inverter_list({ page:current,rows:pageSize})
   };
 

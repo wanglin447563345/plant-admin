@@ -28,7 +28,7 @@ export default class InverterRaw extends PureComponent {
 
   // 分页
   change_page = (current,pageSize) => {
-    Cookie.set('default_size',pageSize);
+    Cookie.set('default_size',pageSize,{ expires: 7 });
     this.get_inverter_raw({ page:current,rows:pageSize})
   };
 
