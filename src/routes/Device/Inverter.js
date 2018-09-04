@@ -1,10 +1,12 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
+import Cookie from 'js-cookie'
 import { routerRedux } from 'dva/router';
 import {
   Table,
   Tooltip,
   Button,
+  Pagination,
 } from 'antd';
 
 import styles from '../List/PlantList.less';
@@ -31,12 +33,18 @@ export default class TableList extends PureComponent {
   }
 
   // 分页
-  change_page = (pagination) => {
-    this.get_inverter_list({ page:pagination.current})
+  change_page = (current,pageSize) => {
+    Cookie.set('default_size',pageSize);
+    this.get_inverter_list({ page:current,rows:pageSize})
+  };
+
+  // 显示总条数
+  showTotal= (total)=> {
+    return `共 ${total} 条`;
   };
 
   componentDidMount() {
-    this.get_inverter_list()
+    this.get_inverter_list({page:1,rows:Cookie.get("default_size")||10})
   }
 
   render() {
@@ -143,10 +151,9 @@ export default class TableList extends PureComponent {
         <Table
           columns={columns}
           dataSource={inverter_list.data.list}
-          pagination={inverter_list.data.pagination}
           rowKey='inverter_id'
+          pagination={false}
           scroll={{ x: 1200 }}
-          onChange={this.change_page}
           onRow={(record) => {
             return {
               onClick: () => {
@@ -156,6 +163,19 @@ export default class TableList extends PureComponent {
             };
           }}
         />
+        <div style={{marginTop:15,marginBottom:20,textAlign:"right"}}>
+          <Pagination
+            showQuickJumper
+            showSizeChanger
+            defaultPageSize={Cookie.get('default_size')||10}
+            pageSizeOptions={["10","20","50","100"]}
+            current={inverter_list.data.pagination.current}
+            total={inverter_list.data.pagination.total}
+            onChange={this.change_page}
+            onShowSizeChange={this.change_page}
+            showTotal={this.showTotal}
+          />
+        </div>
       </div>
     );
   }

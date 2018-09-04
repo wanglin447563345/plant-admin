@@ -260,7 +260,7 @@ class BasicLayout extends React.PureComponent {
                   redirectPath="/exception/403"
                 />
               ))}
-              <Redirect from="/center/" to={{pathname:"/center/dashboard/analysis"}} />
+              <Redirect from="/center/" to={{pathname:"/center/dashboard"}} />
               <Route render={NotFound} />
             </Switch>
           </Content>

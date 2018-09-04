@@ -1,35 +1,20 @@
-import { queryNotices } from '../services/api';
 import {verifyUser} from "../utils/utils"
+import {company_stat} from '../services/api'
 
 export default {
   namespace: 'global',
 
   state: {
     collapsed: false,
-    notices: [],
+    company_stat:{},
   },
 
   effects: {
-    *fetchNotices(_, { call, put }) {
-      const data = yield call(queryNotices);
+    *company_stat({ payload }, { call, put }) {
+      const response = yield call(company_stat, payload);
       yield put({
-        type: 'saveNotices',
-        payload: data,
-      });
-      yield put({
-        type: 'user/changeNotifyCount',
-        payload: data.length,
-      });
-    },
-    *clearNotices({ payload }, { put, select }) {
-      yield put({
-        type: 'saveClearedNotices',
-        payload,
-      });
-      const count = yield select(state => state.global.notices.length);
-      yield put({
-        type: 'user/changeNotifyCount',
-        payload: count,
+        type: 'save',
+        payload: response.data,
       });
     },
   },
@@ -41,16 +26,10 @@ export default {
         collapsed: payload,
       };
     },
-    saveNotices(state, { payload }) {
+    save(state, action) {
       return {
         ...state,
-        notices: payload,
-      };
-    },
-    saveClearedNotices(state, { payload }) {
-      return {
-        ...state,
-        notices: state.notices.filter(item => item.type !== payload),
+        company_stat: action.payload,
       };
     },
   },

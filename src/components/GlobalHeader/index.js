@@ -75,7 +75,7 @@ export default class GlobalHeader extends PureComponent {
     return (
       <div className={styles.header}>
         {isDetail<0?'': <p className={styles.nav_path}>
-          <a href="/center/dashboard">首页</a>  > {sessionStorage.getItem('plant_name')}
+          <a href="/center/dashboard">集控视图</a>  > {sessionStorage.getItem('plant_name')}
         </p>  }
         <div className={styles.logos}>
           <img src={logo} alt="" />

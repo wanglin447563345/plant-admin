@@ -65,6 +65,22 @@ export async function weather_raw(params) {
   });
 }
 
+// 电站信息
+export async function company_stat(params) {
+  return request(`${window.DATA_URL}/company/stat`, {
+    method: 'POST',
+    body: params,
+  });
+}
+
+// 电站坐标
+export async function position(params) {
+  return request(`${window.DATA_URL}/plant/list_location`, {
+    method: 'POST',
+    body: params,
+  });
+}
+
 
 
 
